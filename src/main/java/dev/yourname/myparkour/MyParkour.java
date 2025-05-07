@@ -6,8 +6,7 @@ public final class MyParkour extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		// Plugin startup logic
-
+		System.out.println("hello world");
 	}
 
 	@Override
