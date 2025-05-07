@@ -1,0 +1,4 @@
+api-version: '1.21'
+name: Parkour
+version: '0.0.0'
+main: dev.yourname.myparkour.MyParkour

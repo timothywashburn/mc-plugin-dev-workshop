@@ -1,0 +1,8 @@
+.gradle/
+.idea/
+build/
+run/
+.DS_Store
+gradlew
+gradlew.bat
+ignore-*.*
