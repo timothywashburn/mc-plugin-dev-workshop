@@ -30,4 +30,12 @@ public class ParkourUtils {
 	public static void sendMessage(Player player, String message) {
 		player.sendMessage(colorize(message));
 	}
+
+	public static String getFormattedTicks(long ticks) {
+		long seconds = ticks / 20;
+		long minutes = seconds / 60;
+		seconds %= 60;
+		long milliseconds = (ticks % 20) * 50;
+		return String.format("%02d:%02d.%02d", minutes, seconds, milliseconds);
+	}
 }

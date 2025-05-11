@@ -1,5 +1,7 @@
 package dev.yourname.myparkour;
 
+import dev.yourname.myparkour.commands.AdminCommand;
+import dev.yourname.myparkour.commands.LeaderboardCommand;
 import dev.yourname.myparkour.commands.ParkourCommand;
 import dev.yourname.myparkour.controllers.ParkourManager;
 import dev.yourname.myparkour.controllers.PlayerManager;
@@ -15,8 +17,9 @@ public final class MyParkour extends JavaPlugin {
 		System.out.println("hello world");
 
 		Bukkit.getServer().getPluginCommand("parkour").setExecutor(new ParkourCommand());
+		Bukkit.getServer().getPluginCommand("leaderboard").setExecutor(new LeaderboardCommand());
+		Bukkit.getServer().getPluginCommand("admin").setExecutor(new AdminCommand());
 
-		Bukkit.getPluginManager().registerEvents(new ParkourManager(), this);
 		Bukkit.getPluginManager().registerEvents(new PlayerManager(), this);
 	}
 

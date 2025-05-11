@@ -1,32 +1,16 @@
 package dev.yourname.myparkour.controllers;
 
-import dev.yourname.myparkour.MyParkour;
 import dev.yourname.myparkour.models.Parkour;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParkourManager implements Listener {
+public class ParkourManager {
 	public static final List<Parkour> parkours = new ArrayList<>();
-	private static final List<Player> parkourPlayers = new ArrayList<>();
 
 	public ParkourManager() {
-		loadParkours();
-	}
-
-	public static void loadParkours() {
-		File parkourDir = new File(MyParkour.INSTANCE.getDataFolder() + "/parkours");
-		parkourDir.mkdirs();
-		for (File file : parkourDir.listFiles()) {
-			if (file.getName().endsWith(".yml")) {
-				Parkour parkour = new Parkour(file);
-				parkours.add(parkour);
-			}
-		}
+		ParkourDataManager.loadParkours();
 	}
 
 	public static Parkour getParkour(String name) {

@@ -6,3 +6,9 @@ commands:
   parkour:
     aliases:
       - p
+  leaderboard:
+    aliases:
+      - lb
+  admin:
+    aliases:
+      - a
