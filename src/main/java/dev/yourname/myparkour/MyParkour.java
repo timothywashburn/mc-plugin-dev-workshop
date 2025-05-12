@@ -3,7 +3,7 @@ package dev.yourname.myparkour;
 import dev.yourname.myparkour.commands.AdminCommand;
 import dev.yourname.myparkour.commands.LeaderboardCommand;
 import dev.yourname.myparkour.commands.ParkourCommand;
-import dev.yourname.myparkour.controllers.ParkourManager;
+import dev.yourname.myparkour.controllers.ItemManager;
 import dev.yourname.myparkour.controllers.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +21,7 @@ public final class MyParkour extends JavaPlugin {
 		Bukkit.getServer().getPluginCommand("admin").setExecutor(new AdminCommand());
 
 		Bukkit.getPluginManager().registerEvents(new PlayerManager(), this);
+		Bukkit.getPluginManager().registerEvents(new ItemManager(), this);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import dev.yourname.myparkour.models.Parkour;
 import dev.yourname.myparkour.models.PlayerParkourData;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,12 @@ public class ParkourPlayerManager {
 		player.setGameMode(GameMode.ADVENTURE);
 		player.setAllowFlight(false);
 		player.setFlying(false);
+
+		player.getInventory().clear();
+		player.getInventory().setHelmet(null);
+		player.getInventory().setChestplate(null);
+		player.getInventory().setLeggings(null);
+		player.getInventory().setBoots(null);
 
 		parkourPlayers.put(player, parkourData);
 	}

@@ -1,7 +1,11 @@
 package dev.yourname.myparkour.misc;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParkourUtils {
 	public static String createHeader(ChatColor primary, ChatColor secondary, int size, String centerText) {
@@ -37,5 +41,11 @@ public class ParkourUtils {
 		seconds %= 60;
 		long milliseconds = (ticks % 20) * 50;
 		return String.format("%02d:%02d.%02d", minutes, seconds, milliseconds);
+	}
+
+	public static List<? extends Component> createLore(String... lines) {
+		List<Component> lore = new ArrayList<>();
+		for (String line : lines) lore.add(Component.text(colorize("&7" + line)));
+		return lore;
 	}
 }

@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkourManager {
-	public static final List<Parkour> parkours = new ArrayList<>();
+	public static final List<Parkour> parkourList = new ArrayList<>();
 
 	public ParkourManager() {
 		ParkourDataManager.loadParkours();
 	}
 
 	public static Parkour getParkour(String name) {
-		for (Parkour parkour : parkours) if (parkour.name.equalsIgnoreCase(name)) return parkour;
+		for (Parkour parkour : parkourList) if (parkour.name.equalsIgnoreCase(name)) return parkour;
 		return null;
 	}
 
@@ -22,19 +22,19 @@ public class ParkourManager {
 		Parkour parkour = new Parkour(name, location);
 		parkour.spawnLocation = location;
 
-		parkours.add(parkour);
+		parkourList.add(parkour);
 	}
 
 	public static void deleteParkour(String name) {
 		Parkour parkourToDelete = null;
-		for (Parkour parkour : parkours) {
+		for (Parkour parkour : parkourList) {
 			if (parkour.name.equalsIgnoreCase(name)) {
 				parkourToDelete = parkour;
 				break;
 			}
 		}
 		if (parkourToDelete != null) {
-			parkours.remove(parkourToDelete);
+			parkourList.remove(parkourToDelete);
 		}
 	}
 }

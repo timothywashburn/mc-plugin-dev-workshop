@@ -46,7 +46,7 @@ public class ParkourCommand implements CommandExecutor {
 		} else if (subCommand.equalsIgnoreCase("list")) {
 			String header = ParkourUtils.createHeader(ChatColor.GREEN, ChatColor.DARK_GREEN, 10, "parkours");
 			ParkourUtils.sendMessage(player, header);
-			for (Parkour parkour : ParkourManager.parkours) {
+			for (Parkour parkour : ParkourManager.parkourList) {
 				String worldName = parkour.spawnLocation.getWorld().getName();
 				String message = "&a> " + parkour.name + " &7" + worldName + " " + parkour.getFormattedLocation();
 				ParkourUtils.sendMessage(player, message);

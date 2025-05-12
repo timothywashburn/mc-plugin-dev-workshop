@@ -16,7 +16,7 @@ public class ParkourDataManager {
 		for (File file : parkourDir.listFiles()) {
 			if (file.getName().endsWith(".yml")) {
 				Parkour parkour = new Parkour(file);
-				ParkourManager.parkours.add(parkour);
+				ParkourManager.parkourList.add(parkour);
 			}
 		}
 	}
