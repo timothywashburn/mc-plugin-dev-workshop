@@ -4,7 +4,10 @@ import dev.yourname.myparkour.commands.AdminCommand;
 import dev.yourname.myparkour.commands.LeaderboardCommand;
 import dev.yourname.myparkour.commands.ParkourCommand;
 import dev.yourname.myparkour.controllers.ItemManager;
+import dev.yourname.myparkour.controllers.ParkourManager;
+import dev.yourname.myparkour.controllers.ParkourPlayerManager;
 import dev.yourname.myparkour.controllers.PlayerManager;
+import dev.yourname.myparkour.models.Parkour;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,6 +19,8 @@ public final class MyParkour extends JavaPlugin {
 		INSTANCE = this;
 		System.out.println("hello world");
 
+		ParkourManager.init();
+
 		Bukkit.getServer().getPluginCommand("parkour").setExecutor(new ParkourCommand());
 		Bukkit.getServer().getPluginCommand("leaderboard").setExecutor(new LeaderboardCommand());
 		Bukkit.getServer().getPluginCommand("admin").setExecutor(new AdminCommand());
@@ -26,6 +31,7 @@ public final class MyParkour extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		// Plugin shutdown logic
+		ParkourPlayerManager.stopParkour();
+		for (Parkour parkour : ParkourManager.parkourList) parkour.save();
 	}
 }

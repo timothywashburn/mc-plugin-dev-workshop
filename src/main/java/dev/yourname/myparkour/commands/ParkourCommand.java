@@ -44,11 +44,16 @@ public class ParkourCommand implements CommandExecutor {
 			ParkourPlayerManager.startParkour(player, parkour);
 
 		} else if (subCommand.equalsIgnoreCase("list")) {
+			if (ParkourManager.parkourList.isEmpty()) {
+				ParkourUtils.sendMessage(player, "&c&lSORRY!&7 There are no parkours yet!");
+				return false;
+			}
+
 			String header = ParkourUtils.createHeader(ChatColor.GREEN, ChatColor.DARK_GREEN, 10, "parkours");
 			ParkourUtils.sendMessage(player, header);
 			for (Parkour parkour : ParkourManager.parkourList) {
 				String worldName = parkour.spawnLocation.getWorld().getName();
-				String message = "&a> " + parkour.name + " &7" + worldName + " " + parkour.getFormattedLocation();
+				String message = "&a> &2" + parkour.name + " &7" + worldName + " " + parkour.getFormattedLocation();
 				ParkourUtils.sendMessage(player, message);
 			}
 			ParkourUtils.sendMessage(player, header);
@@ -59,17 +64,17 @@ public class ParkourCommand implements CommandExecutor {
 				return false;
 			}
 
-			String parkourName = args[1].toLowerCase();
+			String parkourName = args[1];
 			if (ParkourManager.getParkour(parkourName) != null) {
 				ParkourUtils.sendMessage(player, "&c&lERROR!&7 Parkour already exists: " + parkourName);
 				return false;
 			}
-			if (!parkourName.matches("[a-zA-Z0-9_ ]+")) {
-				ParkourUtils.sendMessage(player, "&c&lERROR!&7 Parkour name can only contain letters, numbers, underscores, and spaces.");
+			if (!parkourName.matches("[a-zA-Z0-9_]+")) {
+				ParkourUtils.sendMessage(player, "&c&lERROR!&7 Parkour name can only contain letters, numbers, and underscores!");
 				return false;
 			}
 			if (parkourName.length() > 20) {
-				ParkourUtils.sendMessage(player, "&c&lERROR!&7 Parkour name cannot be longer than 20 characters.");
+				ParkourUtils.sendMessage(player, "&c&lERROR!&7 Parkour name cannot be longer than 20 characters!");
 				return false;
 			}
 

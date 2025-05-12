@@ -1,7 +1,6 @@
 package dev.yourname.myparkour.models;
 
 import dev.yourname.myparkour.controllers.ParkourDataManager;
-import dev.yourname.myparkour.controllers.ParkourManager;
 import dev.yourname.myparkour.enums.SortType;
 import dev.yourname.myparkour.misc.ParkourUtils;
 import org.bukkit.ChatColor;
@@ -23,6 +22,7 @@ public class Parkour {
 		this.spawnLocation = spawnLocation;
 
 		ParkourDataManager.createParkourFile(this);
+		save();
 	}
 
 	public Parkour(File file) {
@@ -43,18 +43,24 @@ public class Parkour {
 	public void printLeaderboard(Player player, SortType sortType) {
 		List<PlayerParkourData> sortedLeaderboard = getSortedLeaderboard(sortType, 10);
 		if (sortedLeaderboard.isEmpty()) {
-			ParkourUtils.sendMessage(player, "&c&lSORRY!&7 No players have completed this parkour yet.");
+			ParkourUtils.sendMessage(player, "&c&lSORRY!&7 No players have completed this parkour yet!");
 			return;
 		}
 
-		String header = ParkourUtils.createHeader(ChatColor.GREEN, ChatColor.DARK_GREEN, 10, "leaderboard");
+		String header = ParkourUtils.createHeader(ChatColor.GREEN, ChatColor.DARK_GREEN, 10, name + " lb");
 		ParkourUtils.sendMessage(player, header);
-		ParkourUtils.sendMessage(player, "Parkour Leaderboard for " + name + ":");
-		for (PlayerParkourData data : sortedLeaderboard) {
-			String message = data.playerName + ": " +
-					ParkourUtils.getFormattedTicks(data.ticks) + ", " +
-					data.jumps + " jumps, " +
-					data.deaths + " deaths";
+		for (int i = 0; i < sortedLeaderboard.size(); i++) {
+			PlayerParkourData data = sortedLeaderboard.get(i);
+			String prefixColor = switch (i) {
+				case 0 -> "&e";
+				case 1 -> "&f";
+				case 2 -> "&6";
+				default -> "&7";
+			};
+			String message = prefixColor + (i + 1) + ". &2" + data.playerName + "&7: " +
+					"&a" + ParkourUtils.getFormattedTicks(data.ticks) + "&7, " +
+					"&a" + data.jumps + "&7 jump" + (data.jumps == 1 ? "" : "s") + ", " +
+					"&a" + data.deaths + "&7 death" + (data.deaths == 1 ? "" : "s");
 			ParkourUtils.sendMessage(player, message);
 		}
 		ParkourUtils.sendMessage(player, header);

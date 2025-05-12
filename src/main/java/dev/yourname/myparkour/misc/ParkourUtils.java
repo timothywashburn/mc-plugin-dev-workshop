@@ -40,7 +40,7 @@ public class ParkourUtils {
 		long minutes = seconds / 60;
 		seconds %= 60;
 		long milliseconds = (ticks % 20) * 50;
-		return String.format("%02d:%02d.%02d", minutes, seconds, milliseconds);
+		return String.format("%02d:%02d.%02d", minutes, seconds, milliseconds / 10);
 	}
 
 	public static List<? extends Component> createLore(String... lines) {

@@ -2,19 +2,23 @@ package dev.yourname.myparkour.controllers;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import dev.yourname.myparkour.MyParkour;
+import dev.yourname.myparkour.misc.ParkourUtils;
 import dev.yourname.myparkour.models.PlayerParkourData;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerManager implements Listener {
@@ -26,6 +30,13 @@ public class PlayerManager implements Listener {
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					if (!ParkourPlayerManager.isParkouring(player)) continue;
 					PlayerParkourData data = ParkourPlayerManager.getParkourData(player);
+					if (!data.timerStarted) continue;
+					player.sendActionBar(Component.text(ParkourUtils.colorize(
+							"&2&lPARKOUR!&a " + data.parkour.name +
+									" &7| &a" + ParkourUtils.getFormattedTicks(data.ticks) +
+									" &7| &a" + data.jumps + " jump" + (data.jumps == 1 ? "" : "s") +
+									" &7| &a" + data.deaths + " death" + (data.deaths == 1 ? "" : "s")
+					)));
 					data.ticks++;
 				}
 			}
@@ -36,11 +47,12 @@ public class PlayerManager implements Listener {
 		if (!ParkourPlayerManager.isParkouring(player)) return;
 		PlayerParkourData data = ParkourPlayerManager.getParkourData(player);
 
-		double distanceFallen = player.getLocation().getY() - data.parkour.spawnLocation.getY();
+		double distanceFallen = data.parkour.spawnLocation.getY() - player.getLocation().getY();
 		if (distanceFallen > 20) {
 			data.deaths++;
-			// TODO: better death handling?
-			player.teleport(data.parkour.spawnLocation);
+			Location respawnLocation = ParkourPlayerManager.getCheckpoint(player);
+			if (respawnLocation == null) respawnLocation = data.parkour.spawnLocation;
+			player.teleport(respawnLocation);
 		}
 	}
 
@@ -55,10 +67,64 @@ public class PlayerManager implements Listener {
 	}
 
 	@EventHandler
+	public void onPressurePlate(PlayerInteractEvent event) {
+		if (event.getAction() != Action.PHYSICAL) return;
+		Block block = event.getClickedBlock();
+		if (block == null || block.getType() != Material.LIGHT_WEIGHTED_PRESSURE_PLATE) return;
+		Player player = event.getPlayer();
+
+		Block blockUnder = block.getRelative(0, -1, 0);
+		if (blockUnder.getType() == Material.IRON_BLOCK) {
+			if (!ParkourPlayerManager.isParkouring(player)) {
+				ParkourUtils.sendMessage(player, "&c&lERROR!&7 Use /parkour start <parkourName> to start parkouring!");
+				return;
+			}
+
+			PlayerParkourData data = ParkourPlayerManager.getParkourData(player);
+			data.reset();
+			data.timerStarted = true;
+			player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
+
+		} else if (blockUnder.getType() == Material.GOLD_BLOCK) {
+			if (!ParkourPlayerManager.isParkouring(player)) {
+				ParkourUtils.sendMessage(player, "&c&lERROR!&7 Use /parkour start <parkourName> to start parkouring!");
+				return;
+			}
+
+			PlayerParkourData data = ParkourPlayerManager.getParkourData(player);
+			if (!data.timerStarted) {
+				ParkourUtils.sendMessage(player, "&c&lERROR!&7 You skipped the start of the parkour!");
+				return;
+			}
+
+			Location checkpointLocation = block.getLocation().add(0, 1, 0);
+			checkpointLocation.setYaw(player.getYaw());
+			checkpointLocation.setPitch(player.getPitch());
+			ParkourPlayerManager.setCheckpoint(player, checkpointLocation);
+			player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
+			ParkourUtils.sendMessage(player, "&a&lCHECKPOINT!&7 You reached a checkpoint!");
+
+		} else if (blockUnder.getType() == Material.EMERALD_BLOCK) {
+			if (!ParkourPlayerManager.isParkouring(player)) {
+				ParkourUtils.sendMessage(player, "&c&lERROR!&7 Use /parkour start <parkourName> to start parkouring!");
+				return;
+			}
+
+			PlayerParkourData data = ParkourPlayerManager.getParkourData(player);
+			if (!data.timerStarted) {
+				ParkourUtils.sendMessage(player, "&c&lERROR!&7 You skipped the start of the parkour!");
+				return;
+			}
+
+			ParkourPlayerManager.completeParkour(player);
+		}
+	}
+
+	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 		if (!ParkourPlayerManager.isParkouring(player)) return;
-		ParkourPlayerManager.endParkour(player);
+		ParkourPlayerManager.exitParkour(player);
 	}
 
 	@EventHandler
@@ -72,14 +138,14 @@ public class PlayerManager implements Listener {
 	@EventHandler
 	public void onHungerLoss(FoodLevelChangeEvent event) {
 		if (!(event.getEntity() instanceof Player player)) return;
-		if (ParkourPlayerManager.isParkouring(player)) return;
+		if (!ParkourPlayerManager.isParkouring(player)) return;
 		event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void onPlayerHurt(EntityDamageEvent event) {
 		if (!(event.getEntity() instanceof Player player)) return;
-		if (ParkourPlayerManager.isParkouring(player)) return;
+		if (!ParkourPlayerManager.isParkouring(player)) return;
 		event.setCancelled(true);
 	}
 
@@ -100,6 +166,20 @@ public class PlayerManager implements Listener {
 	@EventHandler
 	public void onItemDrag(InventoryDragEvent event) {
 		if (!(event.getWhoClicked() instanceof Player player)) return;
+		if (!ParkourPlayerManager.isParkouring(player)) return;
+		event.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onItemPickup(PlayerAttemptPickupItemEvent event) {
+		Player player = event.getPlayer();
+		if (!ParkourPlayerManager.isParkouring(player)) return;
+		event.setCancelled(true);
+	}
+
+	@EventHandler
+	public void onItemDrop(PlayerDropItemEvent event) {
+		Player player = event.getPlayer();
 		if (!ParkourPlayerManager.isParkouring(player)) return;
 		event.setCancelled(true);
 	}

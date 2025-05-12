@@ -1,20 +1,26 @@
 package dev.yourname.myparkour.controllers;
 
+import dev.yourname.myparkour.enums.CustomItemType;
+import dev.yourname.myparkour.misc.ParkourUtils;
 import dev.yourname.myparkour.models.Parkour;
 import dev.yourname.myparkour.models.PlayerParkourData;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ParkourPlayerManager {
 	private static final Map<Player, PlayerParkourData> parkourPlayers = new HashMap<>();
+	private static final Map<Player, Location> checkpointMap = new HashMap<>();
 
 	public static void startParkour(Player player, Parkour parkour) {
 		if (isParkouring(player)) throw new IllegalArgumentException("Player is already parkouring.");
+
 		PlayerParkourData parkourData = new PlayerParkourData(parkour, player);
+		parkour.leaderboard.add(parkourData);
 
 		player.setHealth(player.getMaxHealth());
 		player.setFoodLevel(20);
@@ -27,16 +33,46 @@ public class ParkourPlayerManager {
 		player.getInventory().setChestplate(null);
 		player.getInventory().setLeggings(null);
 		player.getInventory().setBoots(null);
+		player.getInventory().setItem(4, ItemManager.createCustomItem(CustomItemType.RESET_TO_CHECKPOINT));
+		player.getInventory().setItem(8, ItemManager.createCustomItem(CustomItemType.EXIT_PARKOUR));
+
+		player.teleport(parkour.spawnLocation);
 
 		parkourPlayers.put(player, parkourData);
 	}
 
-	public static void endParkour(Player player) {
+	public static void exitParkour(Player player) {
 		parkourPlayers.remove(player);
+		checkpointMap.remove(player);
 
 		if (!player.isOnline()) return;
 
 		player.setGameMode(GameMode.SURVIVAL);
+
+		player.getInventory().clear();
+		player.getInventory().setHelmet(null);
+		player.getInventory().setChestplate(null);
+		player.getInventory().setLeggings(null);
+		player.getInventory().setBoots(null);
+
+		ParkourUtils.sendMessage(player, "&c&lPARKOUR!&7 You have exited parkour mode!");
+	}
+
+	public static void stopParkour() {
+		for (Player player : parkourPlayers.keySet()) exitParkour(player);
+	}
+
+	public static void completeParkour(Player player) {
+		PlayerParkourData data = parkourPlayers.get(player);
+		data.isComplete = true;
+		data.parkour.save();
+
+		player.setGameMode(GameMode.SURVIVAL);
+		player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
+		ParkourUtils.sendMessage(player, "&a&lPARKOUR!&7 You have completed the parkour!");
+
+		parkourPlayers.remove(player);
+		checkpointMap.remove(player);
 	}
 
 	public static boolean isParkouring(Player player) {
@@ -45,5 +81,13 @@ public class ParkourPlayerManager {
 
 	public static PlayerParkourData getParkourData(Player player) {
 		return parkourPlayers.get(player);
+	}
+
+	public static Location getCheckpoint(Player player) {
+		return checkpointMap.get(player);
+	}
+
+	public static void setCheckpoint(Player player, Location checkpoint) {
+		checkpointMap.put(player, checkpoint);
 	}
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public class ParkourManager {
 	public static final List<Parkour> parkourList = new ArrayList<>();
 
-	public ParkourManager() {
+	public static void init() {
 		ParkourDataManager.loadParkours();
 	}
 
@@ -18,9 +18,9 @@ public class ParkourManager {
 		return null;
 	}
 
-	public static void createParkour(String name, Location location) {
-		Parkour parkour = new Parkour(name, location);
-		parkour.spawnLocation = location;
+	public static void createParkour(String name, Location spawnLocation) {
+		Parkour parkour = new Parkour(name, spawnLocation);
+		parkour.spawnLocation = spawnLocation;
 
 		parkourList.add(parkour);
 	}

@@ -8,6 +8,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 
 public class ParkourDataManager {
 	public static void loadParkours() {
@@ -22,10 +23,15 @@ public class ParkourDataManager {
 	}
 
 	public static void createParkourFile(Parkour parkour) {
-		String fileName = parkour.name.replace(' ', '-') + ".yml";
+		String fileName = parkour.name + ".yml";
 		parkour.file = new File(MyParkour.INSTANCE.getDataFolder() + "/parkours/" + fileName);
 		if (parkour.file.exists()) throw new IllegalArgumentException("Parkour file already exists: " + parkour.file.getPath());
-		parkour.file.mkdirs();
+		parkour.file.getParentFile().mkdirs();
+		try {
+			parkour.file.createNewFile();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void loadParkourData(Parkour parkour) {
@@ -43,12 +49,12 @@ public class ParkourDataManager {
 			return;
 		}
 
-		ConfigurationSection location = config.getConfigurationSection("spawnLocation");
-		if (location != null) {
-			double x = location.getDouble("x");
-			double y = location.getDouble("y");
-			double z = location.getDouble("z");
-			String worldName = location.getString("world");
+		ConfigurationSection spawnLocation = config.getConfigurationSection("spawnLocation");
+		if (spawnLocation != null) {
+			double x = spawnLocation.getDouble("x");
+			double y = spawnLocation.getDouble("y");
+			double z = spawnLocation.getDouble("z");
+			String worldName = spawnLocation.getString("world");
 			if (worldName == null) {
 				System.out.println("Parkour spawnLocation.world not found in parkour: " + parkour.name);
 				return;
@@ -69,6 +75,7 @@ public class ParkourDataManager {
 				int deaths = leaderboardSection.getInt(key + ".deaths");
 
 				PlayerParkourData entry = new PlayerParkourData(playerName, time, jumps, deaths);
+				entry.isComplete = true;
 				parkour.leaderboard.add(entry);
 			}
 		} else {
@@ -78,15 +85,7 @@ public class ParkourDataManager {
 
 	public static void save(Parkour parkour) {
 		File file = parkour.file;
-		file.mkdirs();
-		if (!file.exists()) {
-			try {
-				file.createNewFile();
-			} catch (Exception e) {
-				e.printStackTrace();
-				return;
-			}
-		}
+		if (!file.exists()) throw new RuntimeException("Parkour file does not exist: " + file.getPath());
 
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 		config.set("name", parkour.name);
@@ -96,8 +95,10 @@ public class ParkourDataManager {
 		config.set("spawnLocation.z", parkour.spawnLocation.getZ());
 		config.set("spawnLocation.world", parkour.spawnLocation.getWorld().getName());
 
+		config.set("leaderboard", null);
 		for (int i = 0; i < parkour.leaderboard.size(); i++) {
 			PlayerParkourData entry = parkour.leaderboard.get(i);
+			if (!entry.isComplete) continue;
 			config.set("leaderboard." + i + ".playerName", entry.playerName);
 			config.set("leaderboard." + i + ".time", entry.ticks);
 			config.set("leaderboard." + i + ".jumps", entry.jumps);
@@ -107,7 +108,7 @@ public class ParkourDataManager {
 		try {
 			config.save(file);
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException();
 		}
 	}
 

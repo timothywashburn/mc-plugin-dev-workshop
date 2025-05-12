@@ -1,24 +1,27 @@
 teach how to make a minigame: parkour
 
 parkour
- - start, end, checkpoint blocks
- - custom items for resetting to checkpoint and exiting parkour
  - command for parkours: start parkour, list parkour, create parkour, delete parkour
  - gui: to teleport to all the parkours
- - lb commands: display leaderboard, clear leaderboard (write lb to file)
- - starting parkour: clears inventory, gives item to reset to checkpoint and exit parkour, prevents you from dropping/moving/using those custom items, adventure mode
  - in parkour mode: disable damage, disable hunger loss, display current time, disable item pickup, if you fall too far (10 blocks further down than the start parkour block), particle trailer
  - on complete: display time, display best time, particle/packet item (dye) explosion
- - edge cases: end parkour with logout
  - plugins: luckperms (with permissions), multiversecore, plugman, hologram plugin
  - gamerules: dodalightcycle false, domobspawning false, weather clear 100000
 
 I want to teach these things:
+ - How to use particles
+ - How to use GUIs
+ - How to use packets
+
+ done
+ - start, end, checkpoint blocks
+ - custom items for resetting to checkpoint and exiting parkour
+ - lb commands: display leaderboard, clear leaderboard (write lb to file)
+ - starting parkour: clears inventory, gives item to reset to checkpoint and exit parkour, prevents you from dropping/moving/using those custom items, adventure mode
+ - edge cases: end parkour with logout
+
  - How to register a custom command
  - How to send text to the player
  - How to listen to player/world events
  - How to create a custom item (that can listen to events)
- - How to use particles
- - How to use GUIs
  - How to use sounds
- - How to use packets

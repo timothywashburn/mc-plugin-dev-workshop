@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 public class PlayerParkourData {
 	public Parkour parkour;
 	public Player player;
+	public boolean timerStarted;
+	public boolean isComplete;
 
 	public String playerName;
 	public long ticks;
@@ -22,5 +24,11 @@ public class PlayerParkourData {
 		this.ticks = ticks;
 		this.jumps = jumps;
 		this.deaths = deaths;
+	}
+
+	public void reset() {
+		this.ticks = 0;
+		this.jumps = 0;
+		this.deaths = 0;
 	}
 }

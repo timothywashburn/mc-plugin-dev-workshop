@@ -4,7 +4,6 @@ import dev.yourname.myparkour.controllers.ParkourManager;
 import dev.yourname.myparkour.enums.SortType;
 import dev.yourname.myparkour.misc.ParkourUtils;
 import dev.yourname.myparkour.models.Parkour;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
