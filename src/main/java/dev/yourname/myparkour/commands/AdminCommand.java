@@ -15,6 +15,11 @@ public class AdminCommand implements CommandExecutor {
 	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, @NotNull String @NotNull [] args) {
 		if (!(sender instanceof Player player)) return false;
 
+		if (!player.hasPermission("myparkour.admin")) {
+			ParkourUtils.sendMessage(player, "&c&lERROR!&7 You do not have permission to use this command.");
+			return false;
+		}
+
 		if (args.length < 1) {
 			ParkourUtils.sendMessage(player, "&c&lERROR!&7 Usage: /" + label + " <clearleaderboard>");
 			return false;
