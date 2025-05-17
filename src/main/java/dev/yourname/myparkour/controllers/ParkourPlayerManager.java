@@ -69,7 +69,8 @@ public class ParkourPlayerManager {
 
 		player.setGameMode(GameMode.SURVIVAL);
 		player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
-		ParkourUtils.sendMessage(player, "&a&lPARKOUR!&7 You have completed the parkour!");
+		ParkourUtils.sendMessage(player, "&a&lPARKOUR!&7 You have completed the parkour in " +
+				ParkourUtils.getFormattedTicks(data.ticks) + "!");
 
 		parkourPlayers.remove(player);
 		checkpointMap.remove(player);
