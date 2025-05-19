@@ -2,13 +2,6 @@ teach how to make a minigame: parkour
 
 parkour
  - command for parkours: delete parkour
- - in parkour mode: particle trail
-
-I want to teach these things:
- - How to use particles
-
- to test:
- - on complete: display time
 
  dropped
  - How to use GUIs
@@ -24,11 +17,13 @@ I want to teach these things:
  - edge cases: end parkour with logout
  - plugins: luckperms (with permissions), multiversecore, plugman
  - gamerules: dodalightcycle false, domobspawning false, weather clear 100000
- - parkour mode: disable damage, disable hunger loss, display current time, disable item pickup, if you fall too far (10 blocks further down than the start parkour block)
+ - in parkour mode: disable damage, disable hunger loss, display current time, disable item pickup, if you fall too far (10 blocks further down than the start parkour block), particle trail
  - command for parkours: start parkour, list parkour, create parkour
+ - on complete: display time
 
  - How to register a custom command
  - How to send text to the player
  - How to listen to player/world events
  - How to create a custom item (that can listen to events)
  - How to use sounds
+ - How to use particles

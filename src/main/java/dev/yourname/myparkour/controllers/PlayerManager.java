@@ -5,10 +5,7 @@ import dev.yourname.myparkour.MyParkour;
 import dev.yourname.myparkour.misc.ParkourUtils;
 import dev.yourname.myparkour.models.PlayerParkourData;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,12 +28,20 @@ public class PlayerManager implements Listener {
 					if (!ParkourPlayerManager.isParkouring(player)) continue;
 					PlayerParkourData data = ParkourPlayerManager.getParkourData(player);
 					if (!data.timerStarted) continue;
+
+					Color rainbowColor = ParkourUtils.getRainbowColor((int) (data.ticks % 360));
+					Particle.DustOptions dustOptions = new Particle.DustOptions(
+							rainbowColor, 1.5f
+					);
+					player.spawnParticle(Particle.DUST, player.getLocation(), 3, dustOptions);
+
 					player.sendActionBar(Component.text(ParkourUtils.colorize(
 							"&2&lPARKOUR!&a " + data.parkour.name +
 									" &7| &a" + ParkourUtils.getFormattedTicks(data.ticks) +
 									" &7| &a" + data.jumps + " jump" + (data.jumps == 1 ? "" : "s") +
 									" &7| &a" + data.deaths + " death" + (data.deaths == 1 ? "" : "s")
 					)));
+
 					data.ticks++;
 				}
 			}
