@@ -102,12 +102,12 @@ public class PlayerManager implements Listener {
 				return;
 			}
 
-			Location checkpointLocation = block.getLocation().add(0, 1, 0);
+			Location checkpointLocation = block.getLocation().add(0.5, 0, 0.5);
 			checkpointLocation.setYaw(player.getYaw());
 			checkpointLocation.setPitch(player.getPitch());
 			ParkourPlayerManager.setCheckpoint(player, checkpointLocation);
 			player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
-			ParkourUtils.sendMessage(player, "&a&lCHECKPOINT!&7 You reached a checkpoint!");
+			ParkourUtils.sendMessage(player, "&6&lCHECKPOINT!&7 You reached a checkpoint!");
 
 		} else if (blockUnder.getType() == Material.EMERALD_BLOCK) {
 			if (!ParkourPlayerManager.isParkouring(player)) {
