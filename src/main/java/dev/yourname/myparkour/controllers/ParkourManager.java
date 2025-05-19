@@ -26,15 +26,15 @@ public class ParkourManager {
 	}
 
 	public static void deleteParkour(String name) {
-		Parkour parkourToDelete = null;
-		for (Parkour parkour : parkourList) {
-			if (parkour.name.equalsIgnoreCase(name)) {
-				parkourToDelete = parkour;
-				break;
-			}
+		Parkour parkour = null;
+		for (Parkour testParkour : parkourList) {
+			if (!testParkour.name.equalsIgnoreCase(name)) continue;
+			parkour = testParkour;
+			break;
 		}
-		if (parkourToDelete != null) {
-			parkourList.remove(parkourToDelete);
-		}
+		if (parkour == null) return;
+
+		parkourList.remove(parkour);
+		parkour.delete();
 	}
 }

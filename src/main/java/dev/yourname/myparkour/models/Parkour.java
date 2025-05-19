@@ -1,6 +1,7 @@
 package dev.yourname.myparkour.models;
 
 import dev.yourname.myparkour.controllers.ParkourDataManager;
+import dev.yourname.myparkour.controllers.ParkourPlayerManager;
 import dev.yourname.myparkour.enums.SortType;
 import dev.yourname.myparkour.misc.ParkourUtils;
 import org.bukkit.ChatColor;
@@ -84,6 +85,7 @@ public class Parkour {
 	}
 
 	public void delete() {
+		ParkourPlayerManager.stopParkour(this);
 		ParkourDataManager.delete(this);
 	}
 }

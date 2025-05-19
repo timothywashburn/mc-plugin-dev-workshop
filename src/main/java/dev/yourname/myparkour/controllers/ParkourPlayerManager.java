@@ -62,6 +62,13 @@ public class ParkourPlayerManager {
 		for (Player player : parkourPlayers.keySet()) exitParkour(player);
 	}
 
+	public static void stopParkour(Parkour parkour) {
+		for (Player player : parkourPlayers.keySet()) {
+			PlayerParkourData data = parkourPlayers.get(player);
+			if (data.parkour.equals(parkour)) exitParkour(player);
+		}
+	}
+
 	public static void completeParkour(Player player) {
 		PlayerParkourData data = parkourPlayers.get(player);
 		data.isComplete = true;
