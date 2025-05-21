@@ -13,12 +13,24 @@ public class PlayerParkourData {
 	public int jumps;
 	public int deaths;
 
+	/**
+	 * Should be called when a player starts a parkour
+	 * @param parkour The parkour the player is starting
+	 * @param player The player starting the parkour
+	 */
 	public PlayerParkourData(Parkour parkour, Player player) {
 		this(player.getName(), 0, 0, 0);
 		this.parkour = parkour;
 		this.player = player;
 	}
 
+	/**
+	 * Should be called when loading a parkour data entry
+	 * @param playerName The name of the player
+	 * @param ticks The time in ticks
+	 * @param jumps The number of jumps
+	 * @param deaths The number of deaths
+	 */
 	public PlayerParkourData(String playerName, long ticks, int jumps, int deaths) {
 		this.playerName = playerName;
 		this.ticks = ticks;
