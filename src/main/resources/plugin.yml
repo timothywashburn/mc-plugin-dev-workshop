@@ -6,9 +6,3 @@ commands:
   parkour: # TODO: step 1
     aliases:
       - p
-  leaderboard: # TODO: step 10
-    aliases:
-      - lb
-  admin:
-    aliases: # TODO: step 11
-      - a

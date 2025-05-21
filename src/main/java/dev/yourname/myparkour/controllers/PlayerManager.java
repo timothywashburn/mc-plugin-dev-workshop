@@ -21,32 +21,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class PlayerManager implements Listener {
 
 	public PlayerManager() {
-		// TODO: step 13
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				for (Player player : Bukkit.getOnlinePlayers()) {
-					if (!ParkourPlayerManager.isParkouring(player)) continue;
-					PlayerParkourData data = ParkourPlayerManager.getParkourData(player);
-					if (!data.timerStarted) continue;
-
-					Color rainbowColor = ParkourUtils.getRainbowColor((int) (data.ticks % 360));
-					Particle.DustOptions dustOptions = new Particle.DustOptions(
-							rainbowColor, 1.5f
-					);
-					player.spawnParticle(Particle.DUST, player.getLocation(), 3, dustOptions);
-
-					player.sendActionBar(Component.text(ParkourUtils.colorize(
-							"&2&lPARKOUR!&a " + data.parkour.name +
-									" &7| &a" + ParkourUtils.getFormattedTicks(data.ticks) +
-									" &7| &a" + data.jumps + " jump" + (data.jumps == 1 ? "" : "s") +
-									" &7| &a" + data.deaths + " death" + (data.deaths == 1 ? "" : "s")
-					)));
-
-					data.ticks++;
-				}
-			}
-		}.runTaskTimer(MyParkour.INSTANCE, 0L, 1L);
 	}
 
 	// TODO: step 3
@@ -56,7 +30,6 @@ public class PlayerManager implements Listener {
 
 		double distanceFallen = data.parkour.spawnLocation.getY() - player.getLocation().getY();
 		if (distanceFallen > 20) {
-			data.deaths++; // TODO: step 12
 			Location respawnLocation = ParkourPlayerManager.getCheckpoint(player); // TODO: step 5
 			if (respawnLocation == null) respawnLocation = data.parkour.spawnLocation; // TODO: step 5
 			player.teleport(respawnLocation); // TODO: initially just data.parkour.spawnLocation
@@ -138,15 +111,6 @@ public class PlayerManager implements Listener {
 		ParkourPlayerManager.exitParkour(player);
 	}
 
-	// TODO: step 12
-	@EventHandler
-	public void onPlayerJump(PlayerJumpEvent event) {
-		Player player = event.getPlayer();
-		if (!ParkourPlayerManager.isParkouring(player)) return;
-		PlayerParkourData data = ParkourPlayerManager.getParkourData(player);
-		data.jumps++;
-	}
-
 	// TODO: step 4
 	@EventHandler
 	public void onHungerLoss(FoodLevelChangeEvent event) {
@@ -166,38 +130,6 @@ public class PlayerManager implements Listener {
 	// TODO: step 4
 	@EventHandler
 	public void onGamemodeChange(PlayerGameModeChangeEvent event) {
-		Player player = event.getPlayer();
-		if (!ParkourPlayerManager.isParkouring(player)) return;
-		event.setCancelled(true);
-	}
-
-	// TODO: step 14
-	@EventHandler
-	public void onItemClick(InventoryClickEvent event) {
-		if (!(event.getWhoClicked() instanceof Player player)) return;
-		if (!ParkourPlayerManager.isParkouring(player)) return;
-		event.setCancelled(true);
-	}
-
-	// TODO: step 14
-	@EventHandler
-	public void onItemDrag(InventoryDragEvent event) {
-		if (!(event.getWhoClicked() instanceof Player player)) return;
-		if (!ParkourPlayerManager.isParkouring(player)) return;
-		event.setCancelled(true);
-	}
-
-	// TODO: step 14
-	@EventHandler
-	public void onItemPickup(PlayerAttemptPickupItemEvent event) {
-		Player player = event.getPlayer();
-		if (!ParkourPlayerManager.isParkouring(player)) return;
-		event.setCancelled(true);
-	}
-
-	// TODO: step 14
-	@EventHandler
-	public void onItemDrop(PlayerDropItemEvent event) {
 		Player player = event.getPlayer();
 		if (!ParkourPlayerManager.isParkouring(player)) return;
 		event.setCancelled(true);
