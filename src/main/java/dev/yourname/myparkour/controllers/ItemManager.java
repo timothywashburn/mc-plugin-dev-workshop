@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+// TODO: step 14
 public class ItemManager implements Listener {
 	public static final NamespacedKey ID_KEY = new NamespacedKey(MyParkour.INSTANCE, "id");
 
@@ -24,7 +25,7 @@ public class ItemManager implements Listener {
 		ItemStack itemStack = event.getItem();
 		CustomItemType itemType = getCustomItemType(itemStack);
 		switch (itemType) {
-			case RESET_TO_CHECKPOINT -> {
+			case RESET_TO_CHECKPOINT -> { // TODO: step 15
 				Location checkpoint = ParkourPlayerManager.getCheckpoint(player);
 				if (checkpoint == null) {
 					ParkourUtils.sendMessage(player, "&c&lPARKOUR!&7 You have not reached a checkpoint yet!");
@@ -38,7 +39,7 @@ public class ItemManager implements Listener {
 
 	public static ItemStack createCustomItem(CustomItemType itemType) {
 		switch (itemType) {
-			case RESET_TO_CHECKPOINT -> {
+			case RESET_TO_CHECKPOINT -> { // TODO: step 15
 				ItemStack itemStack = new ItemStack(Material.OAK_DOOR);
 
 				itemStack.editMeta(itemMeta -> {

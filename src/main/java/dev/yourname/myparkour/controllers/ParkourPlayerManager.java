@@ -12,9 +12,10 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: step 1
 public class ParkourPlayerManager {
 	private static final Map<Player, PlayerParkourData> parkourPlayers = new HashMap<>();
-	private static final Map<Player, Location> checkpointMap = new HashMap<>();
+	private static final Map<Player, Location> checkpointMap = new HashMap<>(); // TODO: step 5
 
 	public static void startParkour(Player player, Parkour parkour) {
 		if (isParkouring(player)) throw new IllegalArgumentException("Player is already parkouring.");
@@ -43,7 +44,7 @@ public class ParkourPlayerManager {
 
 	public static void exitParkour(Player player) {
 		parkourPlayers.remove(player);
-		checkpointMap.remove(player);
+		checkpointMap.remove(player); // TODO: step 5
 
 		if (!player.isOnline()) return;
 
@@ -80,7 +81,7 @@ public class ParkourPlayerManager {
 				ParkourUtils.getFormattedTicks(data.ticks) + "!");
 
 		parkourPlayers.remove(player);
-		checkpointMap.remove(player);
+		checkpointMap.remove(player); // TODO: step 5
 	}
 
 	public static boolean isParkouring(Player player) {
@@ -91,10 +92,12 @@ public class ParkourPlayerManager {
 		return parkourPlayers.get(player);
 	}
 
+	// TODO: step 5
 	public static Location getCheckpoint(Player player) {
 		return checkpointMap.get(player);
 	}
 
+	// TODO: step 5
 	public static void setCheckpoint(Player player, Location checkpoint) {
 		checkpointMap.put(player, checkpoint);
 	}

@@ -21,6 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class PlayerManager implements Listener {
 
 	public PlayerManager() {
+		// TODO: step 13
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -48,29 +49,33 @@ public class PlayerManager implements Listener {
 		}.runTaskTimer(MyParkour.INSTANCE, 0L, 1L);
 	}
 
+	// TODO: step 3
 	public void handlePlayerPositionChange(Player player) {
 		if (!ParkourPlayerManager.isParkouring(player)) return;
 		PlayerParkourData data = ParkourPlayerManager.getParkourData(player);
 
 		double distanceFallen = data.parkour.spawnLocation.getY() - player.getLocation().getY();
 		if (distanceFallen > 20) {
-			data.deaths++;
-			Location respawnLocation = ParkourPlayerManager.getCheckpoint(player);
-			if (respawnLocation == null) respawnLocation = data.parkour.spawnLocation;
-			player.teleport(respawnLocation);
+			data.deaths++; // TODO: step 12
+			Location respawnLocation = ParkourPlayerManager.getCheckpoint(player); // TODO: step 5
+			if (respawnLocation == null) respawnLocation = data.parkour.spawnLocation; // TODO: step 5
+			player.teleport(respawnLocation); // TODO: initially just data.parkour.spawnLocation
 		}
 	}
 
+	// TODO: step 3 (spigot figure out when player moves)
 	@EventHandler
 	public void onMove(PlayerMoveEvent event) {
 		handlePlayerPositionChange(event.getPlayer());
 	}
 
+	// TODO: step 3 (explain how teleport is an edge case)
 	@EventHandler
 	public void onTeleport(PlayerTeleportEvent event) {
 		handlePlayerPositionChange(event.getPlayer());
 	}
 
+	// TODO: step 3
 	@EventHandler
 	public void onPressurePlate(PlayerInteractEvent event) {
 		if (event.getAction() != Action.PHYSICAL) return;
@@ -90,7 +95,7 @@ public class PlayerManager implements Listener {
 			data.timerStarted = true;
 			player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
 
-		} else if (blockUnder.getType() == Material.GOLD_BLOCK) {
+		} else if (blockUnder.getType() == Material.GOLD_BLOCK) { // TODO: step 5 (everything inside if statement)
 			if (!ParkourPlayerManager.isParkouring(player)) {
 				ParkourUtils.sendMessage(player, "&c&lERROR!&7 Use /parkour start <parkourName> to start parkouring!");
 				return;
@@ -125,6 +130,7 @@ public class PlayerManager implements Listener {
 		}
 	}
 
+	// TODO: step 4
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
@@ -132,6 +138,7 @@ public class PlayerManager implements Listener {
 		ParkourPlayerManager.exitParkour(player);
 	}
 
+	// TODO: step 12
 	@EventHandler
 	public void onPlayerJump(PlayerJumpEvent event) {
 		Player player = event.getPlayer();
@@ -140,6 +147,7 @@ public class PlayerManager implements Listener {
 		data.jumps++;
 	}
 
+	// TODO: step 4
 	@EventHandler
 	public void onHungerLoss(FoodLevelChangeEvent event) {
 		if (!(event.getEntity() instanceof Player player)) return;
@@ -147,6 +155,7 @@ public class PlayerManager implements Listener {
 		event.setCancelled(true);
 	}
 
+	// TODO: step 4
 	@EventHandler
 	public void onPlayerHurt(EntityDamageEvent event) {
 		if (!(event.getEntity() instanceof Player player)) return;
@@ -154,6 +163,7 @@ public class PlayerManager implements Listener {
 		event.setCancelled(true);
 	}
 
+	// TODO: step 4
 	@EventHandler
 	public void onGamemodeChange(PlayerGameModeChangeEvent event) {
 		Player player = event.getPlayer();
@@ -161,6 +171,7 @@ public class PlayerManager implements Listener {
 		event.setCancelled(true);
 	}
 
+	// TODO: step 14
 	@EventHandler
 	public void onItemClick(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player player)) return;
@@ -168,6 +179,7 @@ public class PlayerManager implements Listener {
 		event.setCancelled(true);
 	}
 
+	// TODO: step 14
 	@EventHandler
 	public void onItemDrag(InventoryDragEvent event) {
 		if (!(event.getWhoClicked() instanceof Player player)) return;
@@ -175,6 +187,7 @@ public class PlayerManager implements Listener {
 		event.setCancelled(true);
 	}
 
+	// TODO: step 14
 	@EventHandler
 	public void onItemPickup(PlayerAttemptPickupItemEvent event) {
 		Player player = event.getPlayer();
@@ -182,6 +195,7 @@ public class PlayerManager implements Listener {
 		event.setCancelled(true);
 	}
 
+	// TODO: step 14
 	@EventHandler
 	public void onItemDrop(PlayerDropItemEvent event) {
 		Player player = event.getPlayer();

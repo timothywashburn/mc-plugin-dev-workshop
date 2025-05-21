@@ -28,10 +28,10 @@ public class Parkour {
 		this.name = name;
 		this.spawnLocation = spawnLocation;
 
-		ParkourDataUtils.createParkourDataFile(this);
-		save();
+		ParkourDataUtils.createParkourDataFile(this); // TODO: step 2
+		save(); // TODO: step 2
 
-		ParkourManager.parkourList.add(this);
+		ParkourManager.parkourList.add(this); // TODO: step 2
 	}
 
 	/**
@@ -40,11 +40,12 @@ public class Parkour {
 	 */
 	public Parkour(File file) {
 		this.file = file;
-		load();
+		load(); // TODO: step 2
 
-		ParkourManager.parkourList.add(this);
+		ParkourManager.parkourList.add(this); // TODO: step 2
 	}
 
+	// TODO: step 10
 	public List<PlayerParkourData> getSortedLeaderboard(SortType sortType, int size) {
 		List<PlayerParkourData> sortedLeaderboard = new ArrayList<>(leaderboard);
 		sortedLeaderboard.sort((data1, data2) -> switch (sortType) {
@@ -55,6 +56,7 @@ public class Parkour {
 		return sortedLeaderboard.size() > size ? sortedLeaderboard.subList(0, size) : sortedLeaderboard;
 	}
 
+	// TODO: step 10
 	public void printLeaderboard(Player player, SortType sortType) {
 		List<PlayerParkourData> sortedLeaderboard = getSortedLeaderboard(sortType, 10);
 		if (sortedLeaderboard.isEmpty()) {
@@ -81,23 +83,28 @@ public class Parkour {
 		ParkourUtils.sendMessage(player, header);
 	}
 
+	// TODO: step 10
 	public void clearLeaderboard() {
 		leaderboard.clear();
 		save();
 	}
 
+	// TODO: step 1
 	public String getFormattedLocation() {
 		return "(" + spawnLocation.getBlockX() + ", " + spawnLocation.getBlockY() + ", " + spawnLocation.getBlockZ() + ")";
 	}
 
+	// TODO: step 2
 	public void load() {
 		ParkourDataUtils.loadParkourData(this);
 	}
 
+	// TODO: step 2
 	public void save() {
 		ParkourDataUtils.saveParkourData(this);
 	}
 
+	// TODO: step 2
 	public void delete() {
 		ParkourPlayerManager.stopParkour(this);
 		ParkourDataUtils.deleteParkourData(this);

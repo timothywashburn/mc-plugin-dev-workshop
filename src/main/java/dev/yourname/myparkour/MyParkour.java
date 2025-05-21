@@ -17,21 +17,21 @@ public final class MyParkour extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		INSTANCE = this;
-		System.out.println("hello world");
+		System.out.println("hello world"); // TODO: step 0
 
-		ParkourManager.init();
+		ParkourManager.init(); // TODO: step 1
 
-		Bukkit.getServer().getPluginCommand("parkour").setExecutor(new ParkourCommand());
-		Bukkit.getServer().getPluginCommand("leaderboard").setExecutor(new LeaderboardCommand());
-		Bukkit.getServer().getPluginCommand("admin").setExecutor(new AdminCommand());
+		Bukkit.getServer().getPluginCommand("parkour").setExecutor(new ParkourCommand()); // TODO: step 1
+		Bukkit.getServer().getPluginCommand("leaderboard").setExecutor(new LeaderboardCommand()); // TODO: step 10
+		Bukkit.getServer().getPluginCommand("admin").setExecutor(new AdminCommand()); // TODO: step 11
 
-		Bukkit.getPluginManager().registerEvents(new PlayerManager(), this);
-		Bukkit.getPluginManager().registerEvents(new ItemManager(), this);
+		Bukkit.getPluginManager().registerEvents(new PlayerManager(), this); // TODO: step 1
+		Bukkit.getPluginManager().registerEvents(new ItemManager(), this); // TODO: step 14
 	}
 
 	@Override
 	public void onDisable() {
-		ParkourPlayerManager.stopParkour();
-		for (Parkour parkour : ParkourManager.parkourList) parkour.save();
+		ParkourPlayerManager.stopParkour(); // TODO: step 1
+		for (Parkour parkour : ParkourManager.parkourList) parkour.save(); // TODO: step 2
 	}
 }

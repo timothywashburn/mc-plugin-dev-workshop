@@ -1,14 +1,14 @@
 api-version: '1.21'
 name: Parkour
 version: '0.0.0'
-main: dev.yourname.myparkour.MyParkour
+main: dev.yourname.myparkour.MyParkour # TODO: step 0
 commands:
-  parkour:
+  parkour: # TODO: step 1
     aliases:
       - p
-  leaderboard:
+  leaderboard: # TODO: step 10
     aliases:
       - lb
   admin:
-    aliases:
+    aliases: # TODO: step 11
       - a

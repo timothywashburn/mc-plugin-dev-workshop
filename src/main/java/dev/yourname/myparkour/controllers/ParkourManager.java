@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: step 1
 public class ParkourManager {
 	public static final List<Parkour> parkourList = new ArrayList<>();
 

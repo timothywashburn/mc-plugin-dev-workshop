@@ -1,14 +1,27 @@
 teach how to make a minigame: parkour
 
-parkour
+coding plan
+ 00) refactor package, build, load, (also show gradle, gitignore), YML, MAIN CLASS
+ 01) Create Parkour: ParkourManager, ParkourPlayerManager, (before do Parkour) ParkourCommand, register, YML, MAIN CLASS
+ 02) Load Data: Parkour, MAIN CLASS
+ 03) Events: PlayerManager (read comments for showing how to search)
+ 04) TODO: Independent events--PlayerManager (quit, hunger, hurt, gamemode change) make them search on their own
+ 05) Checkpoints: ParkourPlayerManager, PlayerManager
+ --- TODO: halfway checkpoint
+ 10) Leaderboard: SortType, Parkour#(getSortedLeaderboard, printLeaderboard, clearLeaderboard), LeaderboardCommand, YML, MAIN CLASS
+ 11) Reset: AdminCommand, YML, MAIN CLASS
+ 12) Stats: PlayerManager jumps, deaths (next step for time)
+ 13) Runnable: PlayerManager (ticks, trail, action bar)
+ 14) Items: !!PlayerManager!!, CustomItemType, ItemManager, MAIN CLASS
+ 15) TODO: Independent Items--ItemManager (reset to checkpoint)
 
- dropped
+dropped
  - How to use GUIs
  - How to use packets
  - gui: to teleport to all the parkours
  - on complete: particle/packet item (dye) explosion, display best time
 
- done
+done
  - start, end, checkpoint blocks
  - custom items for resetting to checkpoint and exiting parkour
  - lb commands: display leaderboard, clear leaderboard (write lb to file)
