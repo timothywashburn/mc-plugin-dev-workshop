@@ -2,7 +2,7 @@ package dev.yourname.myparkour.controllers;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
 import dev.yourname.myparkour.MyParkour;
-import dev.yourname.myparkour.misc.ParkourUtils;
+import dev.yourname.myparkour.utils.ParkourUtils;
 import dev.yourname.myparkour.models.PlayerParkourData;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;

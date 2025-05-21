@@ -1,4 +1,4 @@
-package dev.yourname.myparkour.misc;
+package dev.yourname.myparkour.utils;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
@@ -9,6 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkourUtils {
+	/**
+	 * Creates a text based chat header
+	 * @param primary The color of the main text
+	 * @param secondary The color of the outline
+	 * @param size The size of the text decoration
+	 * @param centerText The text to display in the center
+	 * @return The constructed header string
+	 */
 	public static String createHeader(ChatColor primary, ChatColor secondary, int size, String centerText) {
 		String primaryString = "&" + primary.getChar();
 		String secondaryString = "&" + secondary.getChar();
@@ -28,14 +36,29 @@ public class ParkourUtils {
 		return colorize(header);
 	}
 
+	/**
+	 * Replaces all '&' with '§' and handles escape sequences (&& for '&')
+	 * @param message The message to colorize
+	 * @return The colorized message
+	 */
 	public static String colorize(String message) {
 		return ChatColor.translateAlternateColorCodes('&', message).replaceAll("&&", "&");
 	}
 
+	/**
+	 * Sends a message to a player
+	 * @param player The player to send the message to
+	 * @param message The message to send
+	 */
 	public static void sendMessage(Player player, String message) {
 		player.sendMessage(colorize(message));
 	}
 
+	/**
+	 * Handles turning a duration of ticks into a formatted string
+	 * @param ticks The duration in ticks
+	 * @return The formatted string
+	 */
 	public static String getFormattedTicks(long ticks) {
 		long seconds = ticks / 20;
 		long minutes = seconds / 60;
@@ -44,12 +67,22 @@ public class ParkourUtils {
 		return String.format("%02d:%02d.%02d", minutes, seconds, milliseconds / 10);
 	}
 
+	/**
+	 * Creates a colorized lore list from a string array
+	 * @param lines The lines to add to the lore
+	 * @return The list of components
+	 */
 	public static List<? extends Component> createLore(String... lines) {
 		List<Component> lore = new ArrayList<>();
 		for (String line : lines) lore.add(Component.text(colorize("&7" + line)));
 		return lore;
 	}
 
+	/**
+	 * Generates a rainbow color based on the hue value
+	 * @param hue The hue value (0-360)
+	 * @return The generated color
+	 */
 	public static Color getRainbowColor(int hue) {
 		float saturation = 1.0f;
 		float value = 1.0f;

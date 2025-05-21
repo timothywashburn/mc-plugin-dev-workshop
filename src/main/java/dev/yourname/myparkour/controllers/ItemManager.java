@@ -2,7 +2,7 @@ package dev.yourname.myparkour.controllers;
 
 import dev.yourname.myparkour.MyParkour;
 import dev.yourname.myparkour.enums.CustomItemType;
-import dev.yourname.myparkour.misc.ParkourUtils;
+import dev.yourname.myparkour.utils.ParkourUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

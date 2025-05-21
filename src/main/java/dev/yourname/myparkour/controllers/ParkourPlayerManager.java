@@ -1,7 +1,7 @@
 package dev.yourname.myparkour.controllers;
 
 import dev.yourname.myparkour.enums.CustomItemType;
-import dev.yourname.myparkour.misc.ParkourUtils;
+import dev.yourname.myparkour.utils.ParkourUtils;
 import dev.yourname.myparkour.models.Parkour;
 import dev.yourname.myparkour.models.PlayerParkourData;
 import org.bukkit.GameMode;

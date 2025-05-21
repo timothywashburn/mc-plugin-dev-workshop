@@ -1,7 +1,6 @@
 teach how to make a minigame: parkour
 
 parkour
- - command for parkours: delete parkour
 
  dropped
  - How to use GUIs
@@ -18,7 +17,7 @@ parkour
  - plugins: luckperms (with permissions), multiversecore, plugman
  - gamerules: dodalightcycle false, domobspawning false, weather clear 100000
  - in parkour mode: disable damage, disable hunger loss, display current time, disable item pickup, if you fall too far (10 blocks further down than the start parkour block), particle trail
- - command for parkours: start parkour, list parkour, create parkour
+ - command for parkours: start parkour, list parkour, create parkour, delete parkour
  - on complete: display time
 
  - How to register a custom command

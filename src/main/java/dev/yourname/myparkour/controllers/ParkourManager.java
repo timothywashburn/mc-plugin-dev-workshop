@@ -1,5 +1,6 @@
 package dev.yourname.myparkour.controllers;
 
+import dev.yourname.myparkour.utils.ParkourDataUtils;
 import dev.yourname.myparkour.models.Parkour;
 import org.bukkit.Location;
 
@@ -10,7 +11,7 @@ public class ParkourManager {
 	public static final List<Parkour> parkourList = new ArrayList<>();
 
 	public static void init() {
-		ParkourDataManager.loadParkours();
+		ParkourDataUtils.loadParkourData();
 	}
 
 	public static Parkour getParkour(String name) {

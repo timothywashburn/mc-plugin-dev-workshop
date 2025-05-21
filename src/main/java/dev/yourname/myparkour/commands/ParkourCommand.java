@@ -2,7 +2,7 @@ package dev.yourname.myparkour.commands;
 
 import dev.yourname.myparkour.controllers.ParkourManager;
 import dev.yourname.myparkour.controllers.ParkourPlayerManager;
-import dev.yourname.myparkour.misc.ParkourUtils;
+import dev.yourname.myparkour.utils.ParkourUtils;
 import dev.yourname.myparkour.models.Parkour;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

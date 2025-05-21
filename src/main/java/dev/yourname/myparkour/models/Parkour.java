@@ -1,9 +1,9 @@
 package dev.yourname.myparkour.models;
 
-import dev.yourname.myparkour.controllers.ParkourDataManager;
+import dev.yourname.myparkour.utils.ParkourDataUtils;
 import dev.yourname.myparkour.controllers.ParkourPlayerManager;
 import dev.yourname.myparkour.enums.SortType;
-import dev.yourname.myparkour.misc.ParkourUtils;
+import dev.yourname.myparkour.utils.ParkourUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -22,7 +22,7 @@ public class Parkour {
 		this.name = name;
 		this.spawnLocation = spawnLocation;
 
-		ParkourDataManager.createParkourFile(this);
+		ParkourDataUtils.createParkourDataFile(this);
 		save();
 	}
 
@@ -77,15 +77,15 @@ public class Parkour {
 	}
 
 	public void load() {
-		ParkourDataManager.loadParkourData(this);
+		ParkourDataUtils.loadParkourData(this);
 	}
 
 	public void save() {
-		ParkourDataManager.save(this);
+		ParkourDataUtils.saveParkourData(this);
 	}
 
 	public void delete() {
 		ParkourPlayerManager.stopParkour(this);
-		ParkourDataManager.delete(this);
+		ParkourDataUtils.deleteParkourData(this);
 	}
 }

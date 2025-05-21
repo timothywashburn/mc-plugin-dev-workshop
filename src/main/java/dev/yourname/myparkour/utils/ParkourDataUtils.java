@@ -1,6 +1,7 @@
-package dev.yourname.myparkour.controllers;
+package dev.yourname.myparkour.utils;
 
 import dev.yourname.myparkour.MyParkour;
+import dev.yourname.myparkour.controllers.ParkourManager;
 import dev.yourname.myparkour.models.PlayerParkourData;
 import dev.yourname.myparkour.models.Parkour;
 import org.bukkit.Location;
@@ -10,8 +11,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-public class ParkourDataManager {
-	public static void loadParkours() {
+public class ParkourDataUtils {
+	/**
+	 * Loads all parkour data from the parkours directory.
+	 */
+	public static void loadParkourData() {
 		File parkourDir = new File(MyParkour.INSTANCE.getDataFolder() + "/parkours");
 		parkourDir.mkdirs();
 		for (File file : parkourDir.listFiles()) {
@@ -22,7 +26,12 @@ public class ParkourDataManager {
 		}
 	}
 
-	public static void createParkourFile(Parkour parkour) {
+	/**
+	 * Creates a new parkour data file. Should be called when creating a new parkour,
+	 * not when loading an existing one.
+	 * @param parkour The parkour to create the data file for.
+	 */
+	public static void createParkourDataFile(Parkour parkour) {
 		String fileName = parkour.name + ".yml";
 		parkour.file = new File(MyParkour.INSTANCE.getDataFolder() + "/parkours/" + fileName);
 		if (parkour.file.exists()) throw new IllegalArgumentException("Parkour file already exists: " + parkour.file.getPath());
@@ -34,6 +43,10 @@ public class ParkourDataManager {
 		}
 	}
 
+	/**
+	 * Loads parkour data for an existing parkour.
+	 * @param parkour The parkour to load data for.
+	 */
 	public static void loadParkourData(Parkour parkour) {
 		File file = parkour.file;
 
@@ -83,7 +96,11 @@ public class ParkourDataManager {
 		}
 	}
 
-	public static void save(Parkour parkour) {
+	/**
+	 * Saves parkour data to the parkour file. Does not create a new file.
+	 * @param parkour The parkour to save data for.
+	 */
+	public static void saveParkourData(Parkour parkour) {
 		File file = parkour.file;
 		if (!file.exists()) throw new RuntimeException("Parkour file does not exist: " + file.getPath());
 
@@ -112,7 +129,11 @@ public class ParkourDataManager {
 		}
 	}
 
-	public static void delete(Parkour parkour) {
+	/**
+	 * Deletes the parkour data file. Should be called when deleting a parkour.
+	 * @param parkour The parkour to delete data for.
+	 */
+	public static void deleteParkourData(Parkour parkour) {
 		if (parkour.file.exists()) parkour.file.delete();
 	}
 }
