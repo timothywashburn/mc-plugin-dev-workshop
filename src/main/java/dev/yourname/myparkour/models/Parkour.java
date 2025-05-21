@@ -19,6 +19,11 @@ public class Parkour {
 	public Location spawnLocation;
 	public List<PlayerParkourData> leaderboard = new ArrayList<>();
 
+	/**
+	 * Should be called when creating a new parkour
+	 * @param name The name of the parkour
+	 * @param spawnLocation The spawn location of the parkour, not necessarily the start block
+	 */
 	public Parkour(String name, Location spawnLocation) {
 		this.name = name;
 		this.spawnLocation = spawnLocation;
@@ -29,6 +34,10 @@ public class Parkour {
 		ParkourManager.parkourList.add(this);
 	}
 
+	/**
+	 * Should be called when loading an existing parkour
+	 * @param file The file of the parkour
+	 */
 	public Parkour(File file) {
 		this.file = file;
 		load();
