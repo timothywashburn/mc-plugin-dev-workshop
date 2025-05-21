@@ -89,6 +89,7 @@ public class PlayerManager implements Listener {
 			data.reset();
 			data.timerStarted = true;
 			player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
+			ParkourUtils.sendMessage(player, "&2&lGO GO GO!&7 You started the parkour " + data.parkour.name + "!");
 
 		} else if (blockUnder.getType() == Material.GOLD_BLOCK) {
 			if (!ParkourPlayerManager.isParkouring(player)) {

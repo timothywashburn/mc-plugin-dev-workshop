@@ -55,7 +55,7 @@ public class ParkourPlayerManager {
 		player.getInventory().setLeggings(null);
 		player.getInventory().setBoots(null);
 
-		ParkourUtils.sendMessage(player, "&c&lPARKOUR!&7 You have exited parkour mode!");
+		ParkourUtils.sendMessage(player, "&c&lERROR!&7 You have exited parkour mode!");
 	}
 
 	public static void stopParkour() {
@@ -76,7 +76,7 @@ public class ParkourPlayerManager {
 
 		player.setGameMode(GameMode.SURVIVAL);
 		player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 1f, 1f);
-		ParkourUtils.sendMessage(player, "&a&lPARKOUR!&7 You have completed the parkour in " +
+		ParkourUtils.sendMessage(player, "&a&lERROR!&7 You have completed the parkour in " +
 				ParkourUtils.getFormattedTicks(data.ticks) + "!");
 
 		parkourPlayers.remove(player);

@@ -27,7 +27,7 @@ public class ItemManager implements Listener {
 			case RESET_TO_CHECKPOINT -> {
 				Location checkpoint = ParkourPlayerManager.getCheckpoint(player);
 				if (checkpoint == null) {
-					ParkourUtils.sendMessage(player, "&c&lPARKOUR!&7 You have not reached a checkpoint yet!");
+					ParkourUtils.sendMessage(player, "&c&lERROR!&7 You have not reached a checkpoint yet!");
 					return;
 				}
 				player.teleport(checkpoint);
