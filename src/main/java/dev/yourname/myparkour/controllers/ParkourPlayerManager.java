@@ -34,8 +34,8 @@ public class ParkourPlayerManager {
 		player.getInventory().setChestplate(null);
 		player.getInventory().setLeggings(null);
 		player.getInventory().setBoots(null);
-		player.getInventory().setItem(4, ItemManager.createCustomItem(CustomItemType.RESET_TO_CHECKPOINT));
-		player.getInventory().setItem(8, ItemManager.createCustomItem(CustomItemType.EXIT_PARKOUR));
+		player.getInventory().setItem(4, ItemManager.createCustomItem(CustomItemType.RESET_TO_CHECKPOINT)); // TODO: step 14
+		player.getInventory().setItem(8, ItemManager.createCustomItem(CustomItemType.EXIT_PARKOUR)); // TODO: step 15
 
 		player.teleport(parkour.spawnLocation);
 

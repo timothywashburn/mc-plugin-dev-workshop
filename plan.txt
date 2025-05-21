@@ -12,8 +12,9 @@ coding plan
  11) Reset: AdminCommand, YML, MAIN CLASS
  12) Stats: PlayerManager jumps, deaths (next step for time)
  13) Runnable: PlayerManager (ticks, trail, action bar)
- 14) Items: !!PlayerManager!!, CustomItemType, ItemManager, MAIN CLASS
- 15) TODO: Independent Items--ItemManager (reset to checkpoint)
+ 14) Items: !!PlayerManager!!, CustomItemType, ItemManager, ParkourPlayerManager, MAIN CLASS
+ 15) TODO: Independent Items--ItemManager, ParkourPlayerManager (reset to checkpoint)
+ 16) Challenge: what issues does this plugin have (which parkour are you starting, doesn't require checkpoints, annoying spam), and how would you maybe go about fixing them?
 
 dropped
  - How to use GUIs
