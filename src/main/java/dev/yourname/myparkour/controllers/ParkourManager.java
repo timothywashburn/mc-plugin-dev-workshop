@@ -22,8 +22,6 @@ public class ParkourManager {
 	public static void createParkour(String name, Location spawnLocation) {
 		Parkour parkour = new Parkour(name, spawnLocation);
 		parkour.spawnLocation = spawnLocation;
-
-		parkourList.add(parkour);
 	}
 
 	public static void deleteParkour(String name) {

@@ -1,5 +1,6 @@
 package dev.yourname.myparkour.models;
 
+import dev.yourname.myparkour.controllers.ParkourManager;
 import dev.yourname.myparkour.utils.ParkourDataUtils;
 import dev.yourname.myparkour.controllers.ParkourPlayerManager;
 import dev.yourname.myparkour.enums.SortType;
@@ -24,11 +25,15 @@ public class Parkour {
 
 		ParkourDataUtils.createParkourDataFile(this);
 		save();
+
+		ParkourManager.parkourList.add(this);
 	}
 
 	public Parkour(File file) {
 		this.file = file;
 		load();
+
+		ParkourManager.parkourList.add(this);
 	}
 
 	public List<PlayerParkourData> getSortedLeaderboard(SortType sortType, int size) {

@@ -1,7 +1,6 @@
 package dev.yourname.myparkour.utils;
 
 import dev.yourname.myparkour.MyParkour;
-import dev.yourname.myparkour.controllers.ParkourManager;
 import dev.yourname.myparkour.models.PlayerParkourData;
 import dev.yourname.myparkour.models.Parkour;
 import org.bukkit.Location;
@@ -19,10 +18,7 @@ public class ParkourDataUtils {
 		File parkourDir = new File(MyParkour.INSTANCE.getDataFolder() + "/parkours");
 		parkourDir.mkdirs();
 		for (File file : parkourDir.listFiles()) {
-			if (file.getName().endsWith(".yml")) {
-				Parkour parkour = new Parkour(file);
-				ParkourManager.parkourList.add(parkour);
-			}
+			if (file.getName().endsWith(".yml")) new Parkour(file);
 		}
 	}
 
